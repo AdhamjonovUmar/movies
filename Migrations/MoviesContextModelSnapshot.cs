@@ -57,9 +57,8 @@ namespace movies.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Birthdate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTimeOffset>("Birthdate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Fullname")
                         .IsRequired()

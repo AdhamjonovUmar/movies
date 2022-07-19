@@ -12,7 +12,7 @@ using movies.Data;
 namespace movies.Migrations
 {
     [DbContext(typeof(MoviesContext))]
-    [Migration("20220719094323_Initial")]
+    [Migration("20220719094813_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,9 +59,8 @@ namespace movies.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Birthdate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTimeOffset>("Birthdate")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Fullname")
                         .IsRequired()

@@ -14,7 +14,7 @@ public class Actor
     public string Fullname { get; set; }
     
     [Required]
-    public string Birthdate { get; set; }
+    public DateTimeOffset Birthdate { get; set; }
     
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public ICollection<Movie> Movies { get; set; }

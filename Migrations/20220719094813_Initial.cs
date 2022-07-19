@@ -15,7 +15,7 @@ namespace movies.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Fullname = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Birthdate = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Birthdate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
                 constraints: table =>
                 {
