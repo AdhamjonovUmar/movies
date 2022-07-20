@@ -15,4 +15,13 @@ public class Genre
     
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public ICollection<Movie> Movies { get; set; }
+
+    [Obsolete("Only for entity binding.")]
+    public Genre() { }
+
+    public Genre(string name, ICollection<Movie> movies = default)
+    {
+        Id = Guid.NewGuid();
+        Name = name;
+    }
 }
