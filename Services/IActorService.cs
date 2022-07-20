@@ -8,6 +8,6 @@ public interface IActorService
     Task<List<Actor>> GetAllAsync();
     Task<Actor> GetAsync(Guid id);
     Task<List<Actor>> GetAllAsync(string fullname);
-    Task<(bool isSuccess, Exception e, Actor actor)> DeleteAsync(Actor actor);
+    Task<(bool isSuccess, Exception e)> DeleteAsync(Guid id);
     Task<bool> ExistAsync(Guid id);
 }
