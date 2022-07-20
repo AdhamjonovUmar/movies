@@ -1,36 +1,74 @@
+using Microsoft.EntityFrameworkCore;
+using movies.Data;
 using movies.Entities;
 
 namespace movies.Services;
 
 public class MovieService : IMovieService
 {
-    public Task<(bool IsSuccess, Exception Exception, Movie Movie)> CreateAsync(Movie movie)
+    private readonly MoviesContext _ctx;
+
+    public MovieService(MoviesContext context)
     {
-        throw new NotImplementedException();
+        _ctx = context;
     }
 
-    public Task<(bool IsSuccess, Exception Exception)> DeleteAsync(Guid id)
+    public async Task<(bool IsSuccess, Exception Exception, Movie Movie)> CreateAsync(Movie movie)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await _ctx.Movies.AddAsync(movie);
+            await _ctx.SaveChangesAsync();
+
+            return (true, null, movie);
+        }
+        catch(Exception e)
+        {
+            return (false, e, null);
+        }
+    }
+
+    public async Task<(bool IsSuccess, Exception Exception)> DeleteAsync(Guid id)
+    {
+        try
+        {
+            var movie = await GetAsync(id);
+
+            if(movie == default(Movie))
+            {
+                return (false, new Exception("Not found"));
+            }
+
+            _ctx.Movies.Remove(movie);
+            await _ctx.SaveChangesAsync();
+
+            return (true,  null);
+        }
+        catch(Exception e)
+        {
+            return (false, e);
+        }
     }
 
     public Task<bool> ExistsAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+        => _ctx.Movies.AnyAsync(a => a.Id == id);
 
     public Task<List<Movie>> GetAllAsync()
-    {
-        throw new NotImplementedException();
-    }
+        => _ctx.Movies
+            .AsNoTracking()
+            .Include(m => m.Actors)
+            .Include(m => m.Genres)
+            .ToListAsync();
 
     public Task<List<Movie>> GetAllAsync(string title)
-    {
-        throw new NotImplementedException();
-    }
+        => _ctx.Movies
+            .AsNoTracking()
+            .Where(a => a.Title == title)
+            .Include(m => m.Actors)
+            .Include(m => m.Genres)
+            .ToListAsync();
 
     public Task<Movie> GetAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+        => _ctx.Movies.FirstOrDefaultAsync(a => a.Id == id);
+
 }
