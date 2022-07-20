@@ -1,9 +1,19 @@
+using movies.Data;
 using movies.Entities;
 
 namespace movies.Services;
 
 public class GenreService : IGenreService
 {
+    private readonly ILogger<GenreService> _logger;
+    private readonly MoviesContext _context;
+
+    public GenreService(ILogger<GenreService> logger, MoviesContext context)
+    {
+        _logger = logger;
+        _context = context;
+    }
+
     public Task<(bool IsSuccess, Exception Exception, Genre Genre)> CreateAsync(Genre genre)
     {
         throw new NotImplementedException();
