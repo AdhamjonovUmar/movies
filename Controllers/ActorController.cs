@@ -26,4 +26,8 @@ public class ActorController : ControllerBase
         }
         return BadRequest(result.e.Message);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAsync()
+        => Ok(await _as.GetAllAsync());
 }
